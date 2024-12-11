@@ -1,7 +1,6 @@
 package task1;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 public class CollisionSensor extends Proc {
     private ArrayList<Sensor> sensors = new ArrayList<Sensor>();

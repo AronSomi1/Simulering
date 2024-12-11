@@ -8,7 +8,7 @@ public class MainSimulation extends Global {
 	public static void main(String[] args) throws IOException {
 		// Simulationi parameters
 		ConfigFileReader cfr = new ConfigFileReader(
-				"task1/inputs/2000config");
+				"assignment3/task1/inputs/2000config");
 		Signal actSignal;
 		int radius = cfr.getR();
 		double sleepTime = 1.0 * 1.0 / cfr.getTs();

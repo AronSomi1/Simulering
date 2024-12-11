@@ -5,7 +5,7 @@ import java.util.Random;
 
 public class ConfigurationFileGenerator {
     public static void main(String[] args) {
-        String inputFile = "task1/config.txt"; // The
+        String inputFile = "assignmkent3/task1/config.txt"; // The
         // input
         // configuration
         // file
@@ -30,7 +30,7 @@ public class ConfigurationFileGenerator {
             }
 
             // Generate the output file name and open the writer
-            String outputFile = "task1/inputs/" + n + "config";
+            String outputFile = "assignment3/task1/inputs/" + n + "config";
             BufferedWriter writer = new BufferedWriter(new FileWriter(outputFile));
 
             // Write the original configuration
