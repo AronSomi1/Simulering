@@ -24,20 +24,25 @@ public class Sensor extends Proc {
         switch (x.signalType) {
             case START: {
                 signalList.SendSignal(START, collisionSensor, this, time);
-            }
-                break;
-            case COLISSON: {
-                sending = false;
-                signalList.SendSignal(START, this, this, time + getNext(sleepTime));
-            }
-                break;
-            case OK: {
-                sending = true;
                 signalList.SendSignal(FINISHEDSENDING, collisionSensor, this, time + sendTime);
                 signalList.SendSignal(START, this, this, time + sendTime + getNext(sleepTime));
             }
                 break;
-
+            /*
+             * case COLISSON: {
+             * sending = false;
+             * signalList.SendSignal(START, this, this, time + getNext(sleepTime));
+             * }
+             * break;
+             * case OK: {
+             * sending = true;
+             * signalList.SendSignal(FINISHEDSENDING, collisionSensor, this, time +
+             * sendTime);
+             * signalList.SendSignal(START, this, this, time + sendTime +
+             * getNext(sleepTime));
+             * }
+             * break;
+             */
         }
     }
 

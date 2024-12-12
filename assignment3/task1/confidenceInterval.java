@@ -31,6 +31,6 @@ public class confidenceInterval {
         double lowerBound = mean - marginOfError;
         double upperBound = mean + marginOfError;
 
-        return new double[] { lowerBound, upperBound, mean, marginOfError * 2 };
+        return new double[] { lowerBound, upperBound, mean, marginOfError * 2.0 };
     }
 }

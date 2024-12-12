@@ -5,8 +5,8 @@ import java.util.ArrayList;
 public class CollisionSensor extends Proc {
     private ArrayList<Sensor> sensors = new ArrayList<Sensor>();
     private int nbrColisions, nbrSuccess, total, nbrMeasurments = 0, runningTransmissios = 0, runningTotal = 0;
-    private ArrayList<Sensor> currentlySending = new ArrayList<Sensor>();
-    private ArrayList<Double> packetLossList = new ArrayList<Double>();
+    private ArrayList<Sensor> currentlySending;
+    private ArrayList<Double> packetLossList;
     private SignalList signalList;
     private double[] confInterval = new double[] { Double.MAX_VALUE, Double.MAX_VALUE, Double.MAX_VALUE,
             Double.MAX_VALUE };
@@ -14,6 +14,8 @@ public class CollisionSensor extends Proc {
 
     public CollisionSensor(SignalList signalList) {
         this.signalList = signalList;
+        this.packetLossList = new ArrayList<Double>();
+        this.currentlySending = new ArrayList<Sensor>();
     }
 
     public void addSensor(Sensor s) {
@@ -26,14 +28,9 @@ public class CollisionSensor extends Proc {
             case START: {
                 total++;
                 Sensor sensor = (Sensor) x.origin;
-                if (currentlySending.size() > 0) {
+                currentlySending.add(sensor);
+                if (currentlySending.size() > 1)
                     fail = true;
-                    nbrColisions++;
-                    sensor.getSignalList().SendSignal(COLISSON, sensor, this, time);
-                } else {
-                    currentlySending.add(sensor);
-                    sensor.getSignalList().SendSignal(OK, sensor, this, time);
-                }
             }
                 break;
             case FINISHEDSENDING: {
@@ -48,7 +45,7 @@ public class CollisionSensor extends Proc {
                 break;
             case MEASURE: {
                 nbrMeasurments++;
-                double packetLoss = 1 - 1.0 * nbrSuccess / total;
+                double packetLoss = (total > 0) ? 1 - 1.0 * nbrSuccess / total : 1.0;
                 packetLossList.add(packetLoss);
                 signalList.SendSignal(MEASURE, this, this, time + getRandomDouble() * 6000);
                 confInterval = confidenceInterval.calculate95ConfidenceInterval(packetLossList);

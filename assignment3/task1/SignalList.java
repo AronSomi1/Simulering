@@ -40,4 +40,8 @@ public class SignalList {
 		dummy.next = null;
 		return dummy;
 	}
+
+	public void ClearList() {
+		list.next = last;
+	}
 }
