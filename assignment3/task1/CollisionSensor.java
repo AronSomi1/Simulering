@@ -56,7 +56,7 @@ public class CollisionSensor extends Proc {
         }
     }
 
-    private boolean collision(Sensor origin) {
+    public boolean collision(Sensor origin) {
         for (Sensor s : currentlySending) {
             if (overlappingAreas(origin, s)) {
 

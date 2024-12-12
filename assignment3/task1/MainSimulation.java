@@ -15,30 +15,43 @@ public class MainSimulation extends Global {
 	double sleepTime;
 	int sendTime;
 	List<int[]> coordinates;
+	double previousUpperBound;
 
 	public static void main(String[] args) throws IOException {
+
+		// if (args.length < 2) {
+		// System.out.println("Usage: java MainSimulation <n> <previousUpperBound>");
+		// return;
+		// }
+
+		// Parse input parameters
+		// int n = Integer.parseInt(args[0]);
+		// double previousUpperBound = Double.parseDouble(args[1]);
+
 		System.out.println("staring main sim");
 
 		// Initialize simulation components
-		MainSimulation m = new MainSimulation();
+		MainSimulation m = new MainSimulation(1000, 0.3);
 		// Run the simulation 1000 times
-		for (int i = 0; i < 100; i++) {
+		for (int i = 0; i < 30; i++) {
 			runSimulation(m);
-			if (i % 10 == 0)
-				System.out.println("simulation n complete: " + i);
+			// if (i % 10 == 0)
+			System.out.println("simulation n complete: " + i);
 		}
 
 		// Calculate and print averages
 		calculateAndPrintAverages();
 	}
 
-	public MainSimulation() throws IOException {
-		ConfigFileReader cfr = new ConfigFileReader("assignment3/task1/inputs/10000config");
+	public MainSimulation(int n, double previousUpperBound) throws IOException {
+		String configPath = "assignment3/task1/inputs/" + n + "config";
+		ConfigFileReader cfr = new ConfigFileReader(configPath);
 
 		this.radius = cfr.getR();
 		this.sleepTime = 1.0 / cfr.getTs();
 		this.sendTime = cfr.getTp();
 		this.coordinates = cfr.getCoordinates();
+		this.previousUpperBound = previousUpperBound;
 	}
 
 	private static void runSimulation(MainSimulation m) throws IOException {
@@ -50,7 +63,7 @@ public class MainSimulation extends Global {
 		initializeSensors(collisionSensor, signalList, m.coordinates, m.radius, m.sleepTime, m.sendTime);
 
 		// Run the simulation and process results
-		simulate(collisionSensor, signalList);
+		simulate(collisionSensor, signalList, m.previousUpperBound);
 		processResults(collisionSensor);
 	}
 
@@ -68,10 +81,9 @@ public class MainSimulation extends Global {
 		}
 	}
 
-	private static void simulate(CollisionSensor collisionSensor, SignalList signalList) {
+	private static void simulate(CollisionSensor collisionSensor, SignalList signalList, double previousUpperBound) {
 		time = 0;
 		double lowerBound = Double.MAX_VALUE;
-		double previousUpperBound = 0.9519;
 
 		// Start the measurement process
 		signalList.SendSignal(MEASURE, collisionSensor, collisionSensor, time + getRandomDouble() * 6000);
