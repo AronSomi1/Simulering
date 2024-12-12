@@ -1,13 +1,31 @@
 import matplotlib.pyplot as plt
 
 
-def plot_results(intensity, throughput, packet_loss):
-
+def plot_results(
+    intensity,
+    throughput_strategy_1,
+    throughput_strategy_2,
+    packet_loss_strategy_1,
+    packet_loss_strategy_2,
+):
     plt.figure(figsize=(12, 6))
 
     # Throughput Plot
     plt.subplot(1, 2, 1)
-    plt.plot(intensity, throughput, label="Throughput", marker="o")
+    plt.plot(
+        intensity,
+        throughput_strategy_1,
+        label="Throughput Strategy 1",
+        marker="o",
+        color="blue",
+    )
+    plt.plot(
+        intensity,
+        throughput_strategy_2,
+        label="Throughput Strategy 2",
+        marker="s",
+        color="green",
+    )
     plt.title("Throughput vs. Traffic Intensity")
     plt.xlabel("Traffic Intensity")
     plt.ylabel("Throughput")
@@ -17,7 +35,18 @@ def plot_results(intensity, throughput, packet_loss):
     # Packet Loss Plot
     plt.subplot(1, 2, 2)
     plt.plot(
-        intensity, packet_loss, label="Packet Loss Probability", marker="o", color="red"
+        intensity,
+        packet_loss_strategy_1,
+        label="Packet Loss Strategy 1",
+        marker="o",
+        color="red",
+    )
+    plt.plot(
+        intensity,
+        packet_loss_strategy_2,
+        label="Packet Loss Strategy 2",
+        marker="s",
+        color="purple",
     )
     plt.title("Packet Loss Probability vs. Traffic Intensity")
     plt.xlabel("Traffic Intensity")
@@ -31,7 +60,7 @@ def plot_results(intensity, throughput, packet_loss):
 
 if __name__ == "__main__":
     intensity = [1000, 2000, 3000, 4000, 5000, 6000, 7000, 8000, 9000, 10000]
-    throughput = [
+    throughput_strategy_1 = [
         0.1518,
         0.1839,
         0.1673,
@@ -43,7 +72,7 @@ if __name__ == "__main__":
         0.0247,
         0.0167,
     ]
-    packet_loss = [
+    packet_loss_strategy_1 = [
         0.3912,
         0.6321,
         0.7764,
@@ -56,8 +85,36 @@ if __name__ == "__main__":
         0.9932,
     ]
 
-    x1 = [0.181, 0.279, 0.331, 0.357, 0.368, 0.372, 0.365, 0.359, 0.351, 0.336]
-    x2 = [0.121, 0.218, 0.291, 0.368, 0.431, 0.474, 0.527, 0.565, 0.597, 0.635]
-    y = [1000, 2000, 3000, 4000, 5000, 6000, 7000, 8000, 9000, 10000]
+    throughput_strategy_2 = [
+        0.1965,
+        0.2359,
+        0.2297,
+        0.1936,
+        0.1496,
+        0.1096,
+        0.0769,
+        0.0522,
+        0.0353,
+        0.0232,
+    ]
 
-    plot_results(intensity, throughput, packet_loss)
+    packet_loss_strategy_2 = [
+        0.3152,
+        0.5358,
+        0.6949,
+        0.8059,
+        0.8803,
+        0.9270,
+        0.9560,
+        0.9739,
+        0.9843,
+        0.9906,
+    ]
+
+    plot_results(
+        intensity,
+        throughput_strategy_1,
+        throughput_strategy_2,
+        packet_loss_strategy_1,
+        packet_loss_strategy_2,
+    )

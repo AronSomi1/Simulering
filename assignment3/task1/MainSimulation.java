@@ -31,9 +31,9 @@ public class MainSimulation extends Global {
 		System.out.println("staring main sim");
 
 		// Initialize simulation components
-		MainSimulation m = new MainSimulation(1000, 0.3);
+		MainSimulation m = new MainSimulation(10000, 0.97);
 		// Run the simulation 1000 times
-		for (int i = 0; i < 30; i++) {
+		for (int i = 0; i < 100; i++) {
 			runSimulation(m);
 			// if (i % 10 == 0)
 			System.out.println("simulation n complete: " + i);
@@ -122,13 +122,15 @@ public class MainSimulation extends Global {
 		double avgUpperBound = upperBounArrayList.stream().mapToDouble(Double::doubleValue).average().orElse(0);
 
 		// Print results
-		System.out.println("Average PacketLoss: " + avgPacketLoss);
 		System.out.println("Average Throughput: " + avgThroughput);
-		System.out.println("Average Upper Bound: " + avgUpperBound);
-		System.out.println("Packet Loss confidence Interval: "
-				+ confidenceInterval.calculate95ConfidenceInterval(meanValuesPacketLoss)[3]);
 		System.out.println("Throughput confidence Interval: "
 				+ confidenceInterval.calculate95ConfidenceInterval(meanValuesThroughput)[3]);
+
+		System.out.println("Average PacketLoss: " + avgPacketLoss);
+		System.out.println("Packet Loss confidence Interval: "
+				+ confidenceInterval.calculate95ConfidenceInterval(meanValuesPacketLoss)[3]);
+		System.out.println("Average Upper Bound: " + avgUpperBound);
+
 	}
 
 }
