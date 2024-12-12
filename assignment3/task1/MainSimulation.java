@@ -31,7 +31,7 @@ public class MainSimulation extends Global {
 		System.out.println("staring main sim");
 
 		// Initialize simulation components
-		MainSimulation m = new MainSimulation(10000, 0.97);
+		MainSimulation m = new MainSimulation(2000, 0.3);
 		// Run the simulation 1000 times
 		for (int i = 0; i < 100; i++) {
 			runSimulation(m);

@@ -34,7 +34,7 @@ public class CollisionSensor extends Proc {
             }
                 break;
             case FINISHEDSENDING: {
-                if (!fail) {
+                if (!fail && inRange((Sensor) x.origin)) {
                     nbrSuccess++;
                 }
                 currentlySending.remove(x.origin);
@@ -69,6 +69,13 @@ public class CollisionSensor extends Proc {
     private boolean overlappingAreas(Sensor origin, Sensor target) {
         double dx = target.getX() - origin.getX();
         double dy = target.getY() - origin.getY();
+        double distance = Math.sqrt(dx * dx + dy * dy);
+        return distance <= origin.getRadius();
+    }
+
+    private boolean inRange(Sensor origin) {
+        double dx = 5000 - origin.getX();
+        double dy = 5000 - origin.getY();
         double distance = Math.sqrt(dx * dx + dy * dy);
         return distance <= origin.getRadius();
     }
