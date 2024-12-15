@@ -1,6 +1,8 @@
 package task2;
 
 public class Floor {
+    public int nbrFinishedInteracringStudents = 0;
+
     public static void main(String[] args) {
         Floor f = new Floor();
         f.divideFloorIntoSquares();
@@ -29,6 +31,11 @@ public class Floor {
 
     public Square[][] getSquares() {
         return squares;
+    }
+
+    public void studentFinishedInteracting() {
+        // System.out.println("Student finished interacting");
+        nbrFinishedInteracringStudents++;
     }
 
 }

@@ -1,4 +1,3 @@
-
 package task2;
 
 import java.util.ArrayList;
@@ -6,7 +5,7 @@ import java.util.Random;
 
 import javax.swing.*;
 
-public class MainSimulation extends Global {
+public class MainSimulationWithGUI extends Global {
 
     public static void main(String[] args) {
         Random rand = new Random();
@@ -19,9 +18,7 @@ public class MainSimulation extends Global {
             Student s = new Student(f, rand.nextDouble() * 20, rand.nextDouble() * 20, VELOCITY, signalList);
             students.add(s);
             signalList.SendSignal(MOVE, s, s, time + GLOBAL_STEP_SIZE);
-            // signalList.SendSignal(MEASURE, s, s, time + 1);
-            signalList.SendSignal(CALCULATEFINISHED, s, s, time + 100);
-
+            signalList.SendSignal(MEASURE, s, s, time + 1);
         }
 
         for (Student student : students) {
@@ -32,6 +29,8 @@ public class MainSimulation extends Global {
             }
         }
         // Set up the GUI
+        SimulationGUI gui = new SimulationGUI(f);
+        SwingUtilities.invokeLater(() -> gui.setVisible(true));
 
         // Start the simulation
 
@@ -40,11 +39,16 @@ public class MainSimulation extends Global {
             time = actSignal.arrivalTime;
             actSignal.destination.TreatSignal(actSignal);
 
+            // Update the GUI
+            gui.updateGrid();
+
+            try {
+                Thread.sleep(1); // Pause for visualization
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
         }
 
-        students.stream().forEach(Student::measure);
-
         System.out.println("All students have finished interacting at time: " + time);
-
     }
 }
