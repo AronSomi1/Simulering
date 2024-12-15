@@ -14,7 +14,7 @@ public class MainSimulationWithGUI extends Global {
         SignalList signalList = new SignalList();
         ArrayList<Student> students = new ArrayList<Student>();
 
-        for (int i = 0; i < 20; i++) {
+        for (int i = 0; i < 10; i++) {
             Student s = new Student(f, rand.nextDouble() * 20, rand.nextDouble() * 20, VELOCITY, signalList);
             students.add(s);
             signalList.SendSignal(MOVE, s, s, time + GLOBAL_STEP_SIZE);

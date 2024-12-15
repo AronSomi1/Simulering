@@ -37,12 +37,12 @@ public class Student extends Proc {
             }
                 break;
             case START_SOCIALIZING: {
-                if (currentlyInteractingWith.size() > 1) {
-                    System.out.println("---------------------------------------------------");
-                    System.out.println("Student" + this.toString() + " is interacting with: ");
-                    currentlyInteractingWith.stream().forEach(student -> System.out.println(
-                            "Student" + student.toString()));
-                }
+                // if (currentlyInteractingWith.size() > 1) {
+                // System.out.println("---------------------------------------------------");
+                // System.out.println("Student" + this.toString() + " is interacting with: ");
+                // currentlyInteractingWith.stream().forEach(student -> System.out.println(
+                // "Student" + student.toString()));
+                // }
                 startSocializing();
             }
                 break;

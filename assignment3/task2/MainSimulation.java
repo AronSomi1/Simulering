@@ -1,14 +1,36 @@
 
 package task2;
 
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Random;
 
-import javax.swing.*;
-
 public class MainSimulation extends Global {
+    private static ArrayList<Double> data = new ArrayList<Double>();
 
     public static void main(String[] args) {
+        int i = 10;
+        double range = Double.MAX_VALUE;
+        confidenceInterval ci = new confidenceInterval();
+
+        while (range > 500 || i > 0) {
+            runSimulation();
+            range = ci.calculate95ConfidenceInterval(data)[3];
+            System.out.println("Range: " + range);
+            i--;
+        }
+        double[] confidenceInterval = ci.calculate95ConfidenceInterval(data);
+        System.out
+                .println("Mean time for interaction: " + confidenceInterval[2] + " \n with an upper bound of: "
+                        + confidenceInterval[1] + "\n confidence interval: " + confidenceInterval[3]);
+    }
+
+    public static void runSimulation() {
+        time = 0;
         Random rand = new Random();
         Floor f = new Floor();
         f.divideFloorIntoSquares();
@@ -16,7 +38,8 @@ public class MainSimulation extends Global {
         ArrayList<Student> students = new ArrayList<Student>();
 
         for (int i = 0; i < 20; i++) {
-            Student s = new Student(f, rand.nextDouble() * 20, rand.nextDouble() * 20, VELOCITY, signalList);
+            Student s = new Student(f, rand.nextDouble() * 20, rand.nextDouble() * 20, 7 * rand.nextDouble(),
+                    signalList);
             students.add(s);
             signalList.SendSignal(MOVE, s, s, time + GLOBAL_STEP_SIZE);
             // signalList.SendSignal(MEASURE, s, s, time + 1);
@@ -31,9 +54,6 @@ public class MainSimulation extends Global {
                 }
             }
         }
-        // Set up the GUI
-
-        // Start the simulation
 
         while (f.nbrFinishedInteracringStudents < students.size()) {
             Signal actSignal = signalList.FetchSignal();
@@ -42,9 +62,25 @@ public class MainSimulation extends Global {
 
         }
 
-        students.stream().forEach(Student::measure);
+        data.add(time);
+        for (Student student : students) {
+            saveHashMapValuesToFile(student.getStudentsInInteraction(),
+                    "assignment3/task2/data/data1.txt", true);
+        }
+        // students.stream().forEach(Student::measure);
 
-        System.out.println("All students have finished interacting at time: " + time);
+        // System.out.println("All students have finished interacting at time: " +
+        // time);
 
+    }
+
+    public static void saveHashMapValuesToFile(HashMap<?, ?> map, String filePath, boolean append) {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(filePath, append))) {
+            for (Object value : map.values()) {
+                writer.write(value.toString());
+                writer.newLine();
+            }
+        } catch (IOException e) {
+        }
     }
 }
