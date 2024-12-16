@@ -17,12 +17,20 @@ public class MainSimulation extends Global {
         double range = Double.MAX_VALUE;
         confidenceInterval ci = new confidenceInterval();
 
-        while (range > 500 || i > 0) {
+        // while (range > 500 || i > 0) {
+        // runSimulation();
+        // range = ci.calculate95ConfidenceInterval(data)[3];
+        // System.out.println("Range: " + range);
+        // i--;
+        // }
+
+        for (int j = 0; j < 300; j++) {
             runSimulation();
-            range = ci.calculate95ConfidenceInterval(data)[3];
-            System.out.println("Range: " + range);
-            i--;
+            if (j % 10 == 0) {
+                System.out.println("Iteration: " + j);
+            }
         }
+
         double[] confidenceInterval = ci.calculate95ConfidenceInterval(data);
         System.out
                 .println("Mean time for interaction: " + confidenceInterval[2] + " \n with an upper bound of: "
@@ -38,7 +46,7 @@ public class MainSimulation extends Global {
         ArrayList<Student> students = new ArrayList<Student>();
 
         for (int i = 0; i < 20; i++) {
-            Student s = new Student(f, rand.nextDouble() * 20, rand.nextDouble() * 20, 7 * rand.nextDouble(),
+            Student s = new Student(f, rand.nextDouble() * 20, rand.nextDouble() * 20, 2,
                     signalList);
             students.add(s);
             signalList.SendSignal(MOVE, s, s, time + GLOBAL_STEP_SIZE);

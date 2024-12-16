@@ -13,15 +13,15 @@ counts = Counter(values)
 sorted_values = sorted(counts.keys())
 frequencies = [counts[val] for val in sorted_values]
 
-plt.figure(figsize=(10, 6))
+plt.figure(figsize=(12, 6))
 
 plt.bar(range(len(sorted_values)), frequencies, tick_label=sorted_values)
 
 plt.xlabel("Value")
 plt.ylabel("Frequency")
-plt.title("U(1,7) m/s vecocity")
+plt.title("2 m/s vecocity")
 
-plt.xticks(rotation=45)
+plt.xticks(rotation=90)
 
 plt.tight_layout()
 plt.show()
